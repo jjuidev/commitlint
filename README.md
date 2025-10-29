@@ -42,6 +42,7 @@ npx node-devtools
 ```
 
 This command will:
+
 1. Ask about your project setup (React, Next.js, Tailwind, etc.)
 2. Automatically install all required dependencies
 3. Detect your package manager (npm, yarn, pnpm, bun)
@@ -49,19 +50,16 @@ This command will:
 
 ### Manual Setup
 
-If you prefer manual setup, you can use these commands:
+The interactive command configures everything (Commitlint, ESLint, Prettier, Husky, Lint-staged). There are no separate `setup` or `init` subcommands in the current version. Use the interactive flow:
 
 ```bash
-# Setup commitlint configuration
-npx node-devtools setup
-
-# Initialize Husky and create git hooks
-npx node-devtools init
+npx node-devtools
 ```
 
 ## What Gets Installed?
 
 ### Base Packages (Always)
+
 - `husky` - Git hooks
 - `lint-staged` - Run linters on staged files
 - `eslint` - JavaScript linter
@@ -73,6 +71,7 @@ npx node-devtools init
 - `prettier-plugin-packagejson` - Sort package.json
 
 ### Conditional Packages (Based on Your Answers)
+
 - **React**: `eslint-plugin-react`, `eslint-plugin-react-hooks`
 - **Next.js**: `@next/eslint-plugin-next`
 - **React Native**: `eslint-plugin-react-native`
@@ -86,7 +85,7 @@ npx node-devtools init
 Create `.commitlintrc.cjs`:
 
 ```javascript
-const { commitlintConfigRecommend } = require('@jjuidev/commitlint');
+const { commitlintConfigRecommend } = require('@jjuidev/node-devtools');
 
 module.exports = commitlintConfigRecommend;
 ```
@@ -96,9 +95,9 @@ module.exports = commitlintConfigRecommend;
 Create `.commitlintrc.cjs`:
 
 ```javascript
-const { defineConfig } = require('@jjuidev/commitlint');
+const { defineCommitlintConfig } = require('@jjuidev/node-devtools');
 
-module.exports = defineConfig((emojiList) => {
+module.exports = defineCommitlintConfig((emojiList) => {
 	// Add or modify emoji types
 	return emojiList.filter((item) => item.type !== 'wip');
 });
@@ -107,9 +106,9 @@ module.exports = defineConfig((emojiList) => {
 ### Example: Add custom emoji types
 
 ```javascript
-const { defineConfig } = require('@jjuidev/commitlint');
+const { defineCommitlintConfig } = require('@jjuidev/node-devtools');
 
-module.exports = defineConfig((emojiList) => {
+module.exports = defineCommitlintConfig((emojiList) => {
 	return [
 		...emojiList,
 		{
@@ -125,30 +124,24 @@ module.exports = defineConfig((emojiList) => {
 ## Complete Setup Flow
 
 1. **Install the package**
+
    ```bash
    npm install --save-dev @jjuidev/node-devtools
    ```
 
 2. **Run interactive setup**
+
    ```bash
    npx node-devtools
    ```
+
    Answer the questions about your project setup.
 
-3. **Initialize git hooks**
-   ```bash
-   npx node-devtools init
-   ```
-   This creates Husky hooks for:
-   - `prepare-commit-msg` - Add emoji to commit messages
-   - `commit-msg` - Validate commit messages
-   - `pre-commit` - Run lint-staged
-
-4. **Start committing!**
+3. **Start committing!**
    ```bash
    git commit -m "feat: add new feature"
    ```
-   Your commit will be validated and emoji will be added automatically!
+   Hooks are set up automatically; your commit will be validated and emoji will be added!
 
 ## Supported Commit Types
 
@@ -180,6 +173,7 @@ The recommended configuration includes the following commit types:
 ## Package Manager Detection
 
 The CLI automatically detects your package manager based on lock files:
+
 - `bun.lockb` → Bun
 - `pnpm-lock.yaml` → pnpm
 - `yarn.lock` → Yarn

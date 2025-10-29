@@ -1,6 +1,6 @@
 # @jjuidev/node-devtools
 
-## 1.1.0
+## 1.2.0
 
 ### Major Changes
 
