@@ -1,0 +1,105 @@
+{
+	"homepage": "https://github.com/jjuidev/node-devtools.git#readme",
+	"bugs": {
+		"url": "https://github.com/jjuidev/node-devtools.git/issues"
+	},
+	"name": "@jjuidev/node-devtools",
+	"version": "2.0.0",
+	"license": "MIT",
+	"description": "Node devtools",
+	"keywords": [
+		"husky",
+		"lint-staged",
+		"eslint",
+		"prettier",
+		"commitlint"
+	],
+	"author": "jjuidev jjuidev@gmail.com",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jjuidev/node-devtools.git"
+	},
+	"type": "module",
+	"main": "./dist/cjs/index.cjs",
+	"module": "./dist/esm/index.js",
+	"exports": {
+		".": {
+			"require": {
+				"types": "./dist/types/index.d.ts",
+				"default": "./dist/cjs/index.cjs"
+			},
+			"import": {
+				"types": "./dist/types/index.d.ts",
+				"default": "./dist/esm/index.js"
+			}
+		}
+	},
+	"bin": {
+		"node-devtools": "./dist/cli/cli.cjs"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup",
+		"changeset": "changeset",
+		"version": "changeset version",
+		"release": "npm run build && changeset publish",
+		"unpublish": "npm unpublish @jjuidev/node-devtools --force"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.29.7",
+		"@types/prompts": "^2.4.9",
+		"tsup": "^8.5.0",
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"commander": "^14.0.2",
+		"consola": "^3.4.2",
+		"picocolors": "^1.1.1",
+		"prompts": "^2.4.2"
+	},
+	"peerDependencies": {
+		"@commitlint/cli": "^20.1.0",
+		"@commitlint/config-conventional": "^20.0.0",
+		"@eslint/js": "^9.38.0",
+		"@next/eslint-plugin-next": "^16.0.1",
+		"eslint": "^9.38.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-autofix": "^2.2.0",
+		"eslint-plugin-import": "^2.32.0",
+		"eslint-plugin-prefer-arrow-functions": "^3.9.1",
+		"eslint-plugin-react": "^7.37.5",
+		"eslint-plugin-react-hooks": "^7.0.1",
+		"eslint-plugin-react-native": "^5.0.0",
+		"eslint-plugin-storybook": "^10.0.0",
+		"eslint-plugin-tailwindcss": "^3.18.2",
+		"globals": "^16.4.0",
+		"prettier": "^3.6.2",
+		"prettier-plugin-tailwindcss": "^0.7.1",
+		"typescript-eslint": "^8.46.2"
+	},
+	"peerDependenciesMeta": {
+		"@next/eslint-plugin-next": {
+			"optional": true
+		},
+		"eslint-plugin-react": {
+			"optional": true
+		},
+		"eslint-plugin-react-hooks": {
+			"optional": true
+		},
+		"eslint-plugin-react-native": {
+			"optional": true
+		},
+		"eslint-plugin-storybook": {
+			"optional": true
+		},
+		"eslint-plugin-tailwindcss": {
+			"optional": true
+		},
+		"prettier-plugin-tailwindcss": {
+			"optional": true
+		}
+	}
+}

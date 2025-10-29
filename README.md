@@ -1,0 +1,225 @@
+# @jjuidev/node-devtools
+
+Interactive devtools setup for Node.js projects with ESLint, Prettier, Commitlint, Husky, and Lint-staged.
+
+## Features
+
+- Interactive CLI setup with framework detection
+- Auto-install dependencies based on your project needs
+- Support for React, Next.js, React Native, Tailwind CSS, and Storybook
+- Git hooks with Husky and Lint-staged
+- Commitlint with devmoji support
+- Zero-config defaults for quick setup
+
+## Quick Start
+
+```bash
+npm install --save-dev @jjuidev/node-devtools
+# or
+yarn add --dev @jjuidev/node-devtools
+# or
+pnpm add -D @jjuidev/node-devtools
+```
+
+Then run the interactive setup:
+
+```bash
+npx node-devtools
+# or
+yarn node-devtools
+# or
+pnpm node-devtools
+```
+
+The CLI will ask you questions about your project and automatically install the necessary dependencies.
+
+## Commands
+
+### Interactive Setup (Recommended)
+
+```bash
+npx node-devtools
+```
+
+This command will:
+1. Ask about your project setup (React, Next.js, Tailwind, etc.)
+2. Automatically install all required dependencies
+3. Detect your package manager (npm, yarn, pnpm, bun)
+4. Install ESLint, Prettier, Husky, Lint-staged, and related plugins
+
+### Manual Setup
+
+If you prefer manual setup, you can use these commands:
+
+```bash
+# Setup commitlint configuration
+npx node-devtools setup
+
+# Initialize Husky and create git hooks
+npx node-devtools init
+```
+
+## What Gets Installed?
+
+### Base Packages (Always)
+- `husky` - Git hooks
+- `lint-staged` - Run linters on staged files
+- `eslint` - JavaScript linter
+- `prettier` - Code formatter
+- `@typescript-eslint/eslint-plugin` - TypeScript ESLint rules
+- `@typescript-eslint/parser` - TypeScript parser for ESLint
+- `eslint-config-prettier` - Disable ESLint rules that conflict with Prettier
+- `eslint-plugin-prettier` - Run Prettier as an ESLint rule
+- `prettier-plugin-packagejson` - Sort package.json
+
+### Conditional Packages (Based on Your Answers)
+- **React**: `eslint-plugin-react`, `eslint-plugin-react-hooks`
+- **Next.js**: `@next/eslint-plugin-next`
+- **React Native**: `eslint-plugin-react-native`
+- **Tailwind CSS**: `eslint-plugin-tailwindcss`, `prettier-plugin-tailwindcss`
+- **Storybook**: `eslint-plugin-storybook`
+
+## Usage
+
+### Option 1: Use the recommended configuration
+
+Create `.commitlintrc.cjs`:
+
+```javascript
+const { commitlintConfigRecommend } = require('@jjuidev/commitlint');
+
+module.exports = commitlintConfigRecommend;
+```
+
+### Option 2: Customize the configuration
+
+Create `.commitlintrc.cjs`:
+
+```javascript
+const { defineConfig } = require('@jjuidev/commitlint');
+
+module.exports = defineConfig((emojiList) => {
+	// Add or modify emoji types
+	return emojiList.filter((item) => item.type !== 'wip');
+});
+```
+
+### Example: Add custom emoji types
+
+```javascript
+const { defineConfig } = require('@jjuidev/commitlint');
+
+module.exports = defineConfig((emojiList) => {
+	return [
+		...emojiList,
+		{
+			type: 'docker',
+			code: ':docker:',
+			emoji: ':whale:',
+			description: 'Docker related changes'
+		}
+	];
+});
+```
+
+## Complete Setup Flow
+
+1. **Install the package**
+   ```bash
+   npm install --save-dev @jjuidev/node-devtools
+   ```
+
+2. **Run interactive setup**
+   ```bash
+   npx node-devtools
+   ```
+   Answer the questions about your project setup.
+
+3. **Initialize git hooks**
+   ```bash
+   npx node-devtools init
+   ```
+   This creates Husky hooks for:
+   - `prepare-commit-msg` - Add emoji to commit messages
+   - `commit-msg` - Validate commit messages
+   - `pre-commit` - Run lint-staged
+
+4. **Start committing!**
+   ```bash
+   git commit -m "feat: add new feature"
+   ```
+   Your commit will be validated and emoji will be added automatically!
+
+## Supported Commit Types
+
+The recommended configuration includes the following commit types:
+
+- `init` :tada: - Initialize project
+- `feat` :sparkles: - Add new feature
+- `fix` :bug: - Fix a bug
+- `chore` :wrench: - Minor tasks or maintenance
+- `docs` :memo: - Update documentation
+- `style` :lipstick: - Improve UI or code style
+- `improve` :rocket: - Improve code quality or performance
+- `refactor` :recycle: - Refactor code without changing logic
+- `perf` :zap: - Enhance performance
+- `test` :white_check_mark: - Add or update tests
+- `build` :building_construction: - Changes related to the build system
+- `ci` :repeat: - Configure CI/CD
+- `revert` :rewind: - Revert a previous commit
+- `merge` :twisted_rightwards_arrows: - Merge branches
+- `wip` :construction: - Work in progress
+- `release` :rocket: - Release a new version
+- `upgrade` :arrow_up: - Upgrade dependencies or software
+- `downgrade` :arrow_down: - Downgrade dependencies or software
+- `bump` :package: - Bump package version
+- `security` :lock: - Improve security
+- `hotfix` :fire: - Urgent bug fix
+- `maintainer` :crown: - Maintainer commit and excellent handle for system
+
+## Package Manager Detection
+
+The CLI automatically detects your package manager based on lock files:
+- `bun.lockb` → Bun
+- `pnpm-lock.yaml` → pnpm
+- `yarn.lock` → Yarn
+- Default → npm
+
+## TypeScript Support
+
+The package includes TypeScript type definitions:
+
+```typescript
+import type { CommitlintConfig, CommitEmoji } from '@jjuidev/node-devtools';
+```
+
+## Contributing
+
+We use [Changesets](https://github.com/changesets/changesets) for version management and publishing.
+
+### Quick Start for Contributors
+
+```bash
+# Make your changes
+npm run build
+
+# Create a changeset
+npm run changeset
+
+# Commit your changes
+git commit -m "feat: your feature"
+```
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed workflow.
+
+## Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) for release history.
+
+## License
+
+MIT
+
+## Author
+
+jjuidev <jjuidev@gmail.com>
